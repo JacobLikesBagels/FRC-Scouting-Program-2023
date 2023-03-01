@@ -1,0 +1,2 @@
+10/24/2022 - First psudo-stable alpha build
+10/25/22 Added JMenuBar to top. Fully added a 'filter' option. Added reset filters after you search
