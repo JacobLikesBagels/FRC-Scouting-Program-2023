@@ -21,6 +21,7 @@ public class GeneralUtilities {
 	
 	private static Map<Integer, Robot> robotMap = null;
 	public static String tmpdir = System.getProperty("java.io.tmpdir");
+	public static String robotFilePath = tmpdir + System.getProperty("file.separator") + "storedrobots.txt";
 	public GeneralUtilities() {
 		
 	}
