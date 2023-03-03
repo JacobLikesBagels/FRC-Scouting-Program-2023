@@ -22,6 +22,7 @@ import me.lowen.jacob.Components.MenuBars.DataMenu;
 import me.lowen.jacob.Components.MenuBars.FileMenu;
 import me.lowen.jacob.Components.MenuBars.FilterSortMenu;
 import me.lowen.jacob.Components.MenuBars.HelpMenu;
+import me.lowen.jacob.Components.MenuBars.SyncMenu;
 import me.lowen.jacob.Utils.GeneralUtilities;
 
 public class MainMenuFrame extends JFrame{
@@ -127,6 +128,7 @@ public class MainMenuFrame extends JFrame{
 		mb.add(new FilterSortMenu());
 		mb.add(new DataMenu());
 		mb.add(new HelpMenu());
+		mb.add(new SyncMenu());
 		return mb;
 		
 	}
