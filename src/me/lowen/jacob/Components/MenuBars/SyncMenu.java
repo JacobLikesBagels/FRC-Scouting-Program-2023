@@ -1,5 +1,6 @@
 package me.lowen.jacob.Components.MenuBars;
 
+import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +14,10 @@ import java.net.UnknownHostException;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+
+import me.lowen.jacob.Components.DebugThings.ConsoleFrame;
+import me.lowen.jacob.Components.Syncing.RobotClient;
+import me.lowen.jacob.Components.Syncing.RobotServer;
 
 public class SyncMenu extends JMenu{
 	private RobotServer server;
@@ -37,27 +42,32 @@ public class SyncMenu extends JMenu{
 		refresh.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent ev) {
 		    		//client.sendData();
+		    	
 		    	if (client == null) {
 		    		String ip = JOptionPane.showInputDialog("Enter the server's IP address");
 		    		client = new RobotClient();
 		    		try {
 						client.getSetup(ip);
 					} catch (UnknownHostException e) {
-						System.out.println("thing in sync");
+						ConsoleFrame.output("Couldn't find an active server on the ip " + ip + "!", Color.RED);
 						JOptionPane.showMessageDialog(null, "Could could not a server running on ip: " + ip, "Ip not found!", JOptionPane.ERROR_MESSAGE);
 						client = null;
 						e.printStackTrace();
 						return;
 					} catch (ConnectException e) {
+						ConsoleFrame.output("Couldn't send data to the server at " + ip + ", this is likey because the server is not online yet, or is an invalid recipient", Color.RED);
 						JOptionPane.showMessageDialog(null, "That server is not online, or could not be found!", "Connection refused", JOptionPane.ERROR_MESSAGE);
 						client = null;
+						
 						e.printStackTrace();
 						return;
 					}
+		    		ConsoleFrame.output("Server found at " + ip + "! Sending data...", Color.WHITE);
 					JOptionPane.showMessageDialog(null, "Success! Found server at: " + ip, "Success!", JOptionPane.INFORMATION_MESSAGE);
 
 		    	}
 		    	client.sendRobotData();
+		    	ConsoleFrame.output("Data to " + client.getIP() + " successfully sent!", Color.WHITE);
 		    }
 		});
 		add(refresh);
@@ -67,6 +77,7 @@ public class SyncMenu extends JMenu{
 		    public void actionPerformed(ActionEvent ev) {
 		    	
 		    	if (threadOnline) {
+		    		ConsoleFrame.output("Another server was started", Color.YELLOW);
 		    		JOptionPane.showMessageDialog(null, "Each running server uses it's own thread, please be careful about creating too many", "Proceed with caution",
 		    				JOptionPane.WARNING_MESSAGE);
 		    	}
@@ -79,9 +90,12 @@ public class SyncMenu extends JMenu{
 		           serverThread.start();
 		           threadOnline = true;
 		           try {
+		        	ConsoleFrame.output("Starting up a server in ip " + InetAddress.getLocalHost() + ". Omit the computer name if present", Color.white);
 					JOptionPane.showMessageDialog(null, "Server started on ip " + InetAddress.getLocalHost(), "Server Startup Succesful",
 						        JOptionPane.INFORMATION_MESSAGE);
 				} catch (HeadlessException | UnknownHostException e) {
+					ConsoleFrame.output("Something went wrong with server creation! Error Below:", Color.RED);
+					ConsoleFrame.output(e.getMessage(), Color.RED);
 					JOptionPane.showMessageDialog(null, "Something went wrong with server creation!", "Server Startup Failed",
 					        JOptionPane.ERROR_MESSAGE);
 					e.printStackTrace();
@@ -105,6 +119,7 @@ public class SyncMenu extends JMenu{
 				close.getOutputStream().write(-1);
 				//close.getOutputStream().flush();
 				close.close();
+				ConsoleFrame.output("Kindly asking the server to stop working", Color.WHITE);
 				JOptionPane.showMessageDialog(null, "The server will stop accepting data, but the thread is still running cause I'm stupid and can't kill a thread for the life of me");
 				return;
 		    	} catch (UnknownHostException e) {

@@ -21,6 +21,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import me.lowen.jacob.Components.DebugThings.ConsoleFrame;
 import me.lowen.jacob.Utils.GeneralUtilities;
 import me.lowen.jacob.Utils.SerializeObject;
+import me.lowen.jacob.Utils.Settings;
 
 public class RobotCollectionPanel extends JPanel implements KeyListener{
 
@@ -73,7 +74,7 @@ public class RobotCollectionPanel extends JPanel implements KeyListener{
 			e1.printStackTrace();
 		} 
 		theHostPanel = hostPanel;
-		this.setLayout(new FlowLayout(FlowLayout.LEFT));
+		this.setLayout(Settings.getChosenLayout(new BoxLayout(this, BoxLayout.X_AXIS)));
 //		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		teamLabel = new JLabel("Team " + TeamNumber);

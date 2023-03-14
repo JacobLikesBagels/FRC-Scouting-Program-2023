@@ -24,7 +24,7 @@ public class SerializeObject {
 			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
 	        objectOut.writeObject(obj);
 	        objectOut.close();
-	        ConsoleFrame.output("Successfully wrote the robots to a file", Color.RED);
+	        ConsoleFrame.output("Successfully wrote the robots to a file", Color.WHITE);
 		} catch (FileNotFoundException e) {
 			ConsoleFrame.output("Could not write the robots to a file!", Color.RED);
         	ConsoleFrame.output(e.toString(), Color.RED);

@@ -12,6 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import me.lowen.jacob.Utils.Settings;
+
 public class RobotDisplayFrame extends JPanel {
 
 	private static final long serialVersionUID = 3141433468218715001L;
@@ -79,7 +81,7 @@ public class RobotDisplayFrame extends JPanel {
 			e1.printStackTrace();
 		} 
 		//theHostPanel = hostPanel;
-		this.setLayout(new FlowLayout(FlowLayout.LEFT));
+		this.setLayout(Settings.getChosenLayout(new BoxLayout(this, BoxLayout.X_AXIS)));
 		//this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		teamLabel = new JLabel("Team " + TeamNumber);
