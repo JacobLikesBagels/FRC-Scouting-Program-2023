@@ -9,6 +9,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import me.lowen.jacob.Components.AboutFrame;
+import me.lowen.jacob.Components.SettingsFrame;
 import me.lowen.jacob.Components.DebugThings.ConsoleFrame;
 
 
@@ -31,6 +32,16 @@ public class HelpMenu extends JMenu {
 		    }
 		});
 		add(preferences);
+		
+		JMenuItem settings = new JMenuItem("Preferences", KeyEvent.VK_H);
+		settings.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent ev) {
+		            new SettingsFrame();
+		    }
+		});
+		add(settings);
+		
+		this.addSeparator();
 		
 		JMenuItem About = new JMenuItem("About", KeyEvent.VK_A);
 		About.addActionListener(new ActionListener() {

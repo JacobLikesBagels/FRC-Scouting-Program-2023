@@ -127,8 +127,9 @@ public class MainMenuFrame extends JFrame{
 		mb.add(new FileMenu());
 		mb.add(new FilterSortMenu());
 		mb.add(new DataMenu());
-		mb.add(new HelpMenu());
 		mb.add(new SyncMenu());
+		mb.add(new HelpMenu());
+
 		return mb;
 		
 	}

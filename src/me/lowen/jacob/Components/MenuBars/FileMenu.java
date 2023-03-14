@@ -13,6 +13,7 @@ import javax.swing.SwingUtilities;
 import me.lowen.jacob.TestingMain;
 import me.lowen.jacob.Components.Robot;
 import me.lowen.jacob.Components.RobotDisplayFrame;
+import me.lowen.jacob.Components.SettingsFrame;
 import me.lowen.jacob.Utils.GeneralUtilities;
 import me.lowen.jacob.Utils.SerializeObject;
 
@@ -34,6 +35,15 @@ public class FileMenu extends JMenu{
 		});
 		add(refresh);
 		
+		JMenuItem settings = new JMenuItem("Preferences", KeyEvent.VK_H);
+		settings.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent ev) {
+		            new SettingsFrame();
+		    }
+		});
+		add(settings);
+		this.addSeparator();
+		
 		JMenuItem exit = new JMenuItem("Exit", KeyEvent.VK_E);
 		exit.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent ev) {
@@ -41,6 +51,8 @@ public class FileMenu extends JMenu{
 		    }
 		});
 		add(exit);
+		
+		
 		
 	
 	}
