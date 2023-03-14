@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -39,7 +40,7 @@ public class NewAddMoreDataFrame extends JFrame{
 	private TeamPanel redTeam;
 	private TeamPanel blueTeam;
 	public NewAddMoreDataFrame() {
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setResizable(false);
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -123,6 +124,8 @@ class SaveMenuBar extends JMenuBar {
 	
 	private static final long serialVersionUID = -7757562928692368254L;
 
+	boolean saved = false;
+	
 	public SaveMenuBar(JPanel host) {
 		//JMenu save = new JMenu("Save");
 		//save.Liste
@@ -150,8 +153,43 @@ class SaveMenuBar extends JMenuBar {
 			
 		});
 		this.add(save);
+		JMenu close = new JMenu("Close");
+		close.setMnemonic(KeyEvent.VK_C);
+		close.addMenuListener(new MenuListener() {
+
+			@Override
+			public void menuCanceled(MenuEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void menuDeselected(MenuEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void menuSelected(MenuEvent arg0) {
+				if (!saved)  {
+					if (JOptionPane.showConfirmDialog(null, "Data is unsaved, are you sure you'd like to continue?") == 0) {
+						((JFrame)SwingUtilities.getWindowAncestor(host)).dispose();
+		
+						return;
+				 
+					}
+				} else {
+					((JFrame)SwingUtilities.getWindowAncestor(host)).dispose();
+				}
+				
+				
+			}
+			
+		});
+		this.add(close);
 	}
 	public void saveAll(JPanel host) {
+		saved = true;
 		HashMap<Integer, Robot> robots = new HashMap<Integer, Robot>();
 		for (Component c : host.getComponents()) {
 			if (c instanceof RobotCollectionPanel) {
