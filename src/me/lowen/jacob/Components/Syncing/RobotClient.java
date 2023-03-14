@@ -1,4 +1,4 @@
-package me.lowen.jacob.Components.MenuBars;
+package me.lowen.jacob.Components.Syncing;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,11 +13,13 @@ import me.lowen.jacob.Utils.SerializeObject;
 public class RobotClient {
 
 	ObjectOutputStream dOut;
-	
+	String IP;
+	public String getIP() {
+		return IP;
+	}
 	synchronized public void getSetup(String ip) throws UnknownHostException, ConnectException {
 		try {
-			System.out.println("fdf");
-			
+			IP = ip;
 			Socket socket = new Socket(ip, 8888); // Create and connect the socket
 			dOut = new ObjectOutputStream(socket.getOutputStream());
 	
@@ -38,6 +40,8 @@ public class RobotClient {
 
 		// Send first message
 		try {
+			
+			
 			
 
 			//Object hi = SerializeObject.ReadObjectFromFile(new File(GeneralUtilities.robotFilePath));

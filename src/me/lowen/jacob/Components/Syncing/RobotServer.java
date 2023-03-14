@@ -1,4 +1,4 @@
-package me.lowen.jacob.Components.MenuBars;
+package me.lowen.jacob.Components.Syncing;
 
 import java.awt.Color;
 import java.io.EOFException;
