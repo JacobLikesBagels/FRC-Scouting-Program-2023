@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JFileChooser;
@@ -20,6 +21,8 @@ import javax.swing.JOptionPane;
 
 import me.lowen.jacob.Components.Robot;
 import me.lowen.jacob.Components.DebugThings.ConsoleFrame;
+import me.lowen.jacob.Utils.GeneralUtilities;
+import me.lowen.jacob.Utils.RobotExportOptions;
 import me.lowen.jacob.Utils.SerializeObject;
 
 public class DataMenu extends JMenu{
@@ -89,6 +92,7 @@ public class DataMenu extends JMenu{
 			        
 					
 		    	}
+			        GeneralUtilities.resetMainFrame();
 		    	}
 		    
 		});
@@ -106,35 +110,7 @@ public class DataMenu extends JMenu{
 				@SuppressWarnings("unused")
 				Integer opt = j.showSaveDialog(new JFrame());
 				File f = j.getSelectedFile();
-				InputStream is = null;
-		        OutputStream os = null;
-		        try {
-		            is = new FileInputStream(storedFile);
-		            os = new FileOutputStream(f);
-
-		            // buffer size 1K
-		            byte[] buf = new byte[1024];
-
-		            int bytesRead;
-		            while ((bytesRead = is.read(buf)) > 0) {
-		                os.write(buf, 0, bytesRead);
-		            }
-		            ConsoleFrame.output("Successfully exported data to " + f.getPath(), Color.WHITE);
-		        }  catch (IOException e) {
-		        	ConsoleFrame.output("Robot data failed to export:", Color.RED);
-					ConsoleFrame.output(e.toString(), Color.RED);
-					e.printStackTrace();
-				} finally {
-		            try {
-						is.close();
-						os.close();
-					} catch (IOException e) {
-						ConsoleFrame.output("Robot data failed to export (hit finally):", Color.RED);
-						ConsoleFrame.output(e.toString(), Color.RED);
-						e.printStackTrace();
-					}
-		            
-		        }
+				RobotExportOptions.copyFromHereToThere(storedFile, f);
 		    }
 		});
 		add(export);
@@ -143,16 +119,59 @@ public class DataMenu extends JMenu{
 		merge.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent ev) {
 		            mergeData();
+		            GeneralUtilities.resetMainFrame();
 		    }
 		});
 		add(merge);
 		
 		addSeparator();
 		
+		JMenu otherExportOptions = new JMenu("Other Export Options");
+		this.add(otherExportOptions);
+		
+		JMenuItem exportJSON = new JMenuItem("Export Data as JSON", KeyEvent.VK_E);
+		exportJSON.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent ev) {
+		    	//all this cod ei this file is terrible ir r egoncie this now
+		    	String tmpdir = System.getProperty("java.io.tmpdir");
+		    	File storedFile = new File(tmpdir + System.getProperty("file.separator") + "storedrobots.txt");
+		    	JFileChooser j = new JFileChooser("sd");
+				j.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				j.setDialogTitle("Choose where to export JSON data");
+				@SuppressWarnings("unused")
+				Integer opt = j.showSaveDialog(new JFrame());
+				File f = j.getSelectedFile();
+				HashMap<Integer, Robot> robots = (HashMap<Integer, Robot>) SerializeObject.ReadObjectFromFile(new File(GeneralUtilities.robotFilePath));
+				RobotExportOptions.exportAsJSON(robots, f);
+		    }
+		});
+		otherExportOptions.add(exportJSON);
+		
+		JMenuItem exportYAML = new JMenuItem("Export Data as YAML", KeyEvent.VK_E);
+		exportYAML.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent ev) {
+		    	//all this cod ei this file is terrible ir r egoncie this now
+		    	String tmpdir = System.getProperty("java.io.tmpdir");
+		    	File storedFile = new File(tmpdir + System.getProperty("file.separator") + "storedrobots.txt");
+		    	JFileChooser j = new JFileChooser("sd");
+				j.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				j.setDialogTitle("Choose where to export YAML data");
+				@SuppressWarnings("unused")
+				Integer opt = j.showSaveDialog(new JFrame());
+				File f = j.getSelectedFile();
+				HashMap<Integer, Robot> robots = (HashMap<Integer, Robot>) SerializeObject.ReadObjectFromFile(new File(GeneralUtilities.robotFilePath));
+				RobotExportOptions.exportAsYAML(robots, f);
+		    }
+		});
+		otherExportOptions.add(exportYAML);
+		
+		this.addSeparator();
+		
 		JMenuItem clear = new JMenuItem("Clear Data", KeyEvent.VK_C);
 		clear.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent ev) {
 		    	deleteData("Are you sure you would like to clear all of your data?");
+		    	GeneralUtilities.resetMainFrame();
 		    }
 		});
 		add(clear);
