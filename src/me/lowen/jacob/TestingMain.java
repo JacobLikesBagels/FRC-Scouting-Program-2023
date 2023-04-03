@@ -18,6 +18,7 @@ import me.lowen.jacob.Components.RobotCollectionPanel;
 import me.lowen.jacob.Components.RobotDisplayFrame;
 import me.lowen.jacob.Components.SettingsFrame;
 import me.lowen.jacob.Components.DebugThings.ConsoleFrame;
+import me.lowen.jacob.Utils.RobotExportOptions;
 import me.lowen.jacob.Utils.SerializeObject;
 
 public class TestingMain {
@@ -36,7 +37,6 @@ public static JPanel panel;
 		ConsoleFrame.debug = new ConsoleFrame();
 		String tmpdir = System.getProperty("java.io.tmpdir");
 		Object readObj = SerializeObject.ReadObjectFromFile(new File(tmpdir + System.getProperty("file.separator") + "storedrobots.txt"));
-		
 		theMainFrame = new MainMenuFrame(((Map<Integer, Robot>) readObj));
 	}
 

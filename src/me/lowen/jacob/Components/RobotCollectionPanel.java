@@ -213,6 +213,7 @@ public class RobotCollectionPanel extends JPanel implements KeyListener{
 			storage.putAll((Map<Integer, Robot>) readObj);
 			SerializeObject.Serialize(new File(tmpdir + System.getProperty("file.separator") + "storedrobots.txt"), storage);
 		}
+		GeneralUtilities.resetMainFrame();
 	}
 	@Override
 	public void keyPressed(KeyEvent arg0) {

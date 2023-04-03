@@ -28,6 +28,7 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
 import me.lowen.jacob.Components.DebugThings.ConsoleFrame;
+import me.lowen.jacob.Utils.GeneralUtilities;
 import me.lowen.jacob.Utils.SerializeObject;
 
 public class NewAddMoreDataFrame extends JFrame{
@@ -148,6 +149,7 @@ class SaveMenuBar extends JMenuBar {
 			@Override
 			public void menuSelected(MenuEvent arg0) {
 				saveAll(host);
+				GeneralUtilities.resetMainFrame();
 				
 			}
 			
